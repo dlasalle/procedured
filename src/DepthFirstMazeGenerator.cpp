@@ -61,16 +61,14 @@ Graph DepthFirstMazeGenerator::generate(
   // pick a random vertex as our root
   size_type root = distribution(m_rng);
 
-  size_type num_connected = 0;
+  connected[root] = true;
+  size_type num_connected = 1;
 
   std::vector<size_type> neighbors;
   neighbors.reserve(num_vertices);
 
   size_type v = root;
   do {
-    ++num_connected;
-    connected[v] = true;
-
     neighbors = graph->get_neighbors(v);
     std::shuffle(neighbors.begin(), neighbors.end(), m_rng);
 
@@ -80,6 +78,8 @@ Graph DepthFirstMazeGenerator::generate(
       if (!connected[neighbor]) {
         tree.add_edge(v, neighbor);
         v = neighbor;
+        connected[v] = true;
+        ++num_connected;
         path_found = true;
         break;
       }
