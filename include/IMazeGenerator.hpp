@@ -12,6 +12,10 @@
 #define PROCEDURED_IMAZEGENERATOR_HPP
 
 
+#include "Graph.hpp"
+
+#include <vector>
+
 namespace procedured
 {
 
@@ -19,6 +23,8 @@ namespace procedured
 class IMazeGenerator
 {
   public:
+    virtual ~IMazeGenerator() = default;
+    
     virtual Graph generate(
         Graph const * const graph) = 0;
 

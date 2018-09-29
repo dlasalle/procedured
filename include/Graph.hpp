@@ -23,14 +23,14 @@ namespace procedured
 class Graph
 {
   public:
-  using vertex_type = std::size_t;
+  using size_type = std::size_t;
 
   class Edge
   {
     public:
     Edge(
-        vertex_type const a,
-        vertex_type const b) :
+        size_type const a,
+        size_type const b) :
       m_a(a),
       m_b(b)
     {
@@ -50,47 +50,51 @@ class Graph
     }
 
     bool operator<(
-        vertex_type const & rhs) const noexcept
+        size_type const & rhs) const noexcept
     {
       return m_a < rhs;
     }
 
-    vertex_type source() const
+    size_type source() const
     {
       return m_a;
     }
 
-    vertex_type dest() const
+    size_type dest() const
     {
       return m_b;
     }
 
     private:
-    vertex_type m_a;
-    vertex_type m_b;
+    size_type m_a;
+    size_type m_b;
   };
 
   Graph(
-      vertex_type num_vertices);
+      size_type num_vertices);
+
+  Graph::size_type num_vertices() const;
+
+  Graph::size_type num_edges() const;
 
   void add_edge(
-      vertex_type vertex_a,
-      vertex_type vertex_b);
+      size_type vertex_a,
+      size_type vertex_b);
 
   void remove_edge(
-      vertex_type vertex_a,
-      vertex_type vertex_b);
+      size_type vertex_a,
+      size_type vertex_b);
 
   bool is_connected(
-      vertex_type vertex_a,
-      vertex_type vertex_b) const;
+      size_type vertex_a,
+      size_type vertex_b) const;
 
-  std::vector<vertex_type> get_neighbors(
-      vertex_type vertex) const;
+  std::vector<size_type> get_neighbors(
+      size_type vertex) const;
 
 
   private:
-  vertex_type m_num_vertices;
+  size_type m_num_vertices;
   std::set<Edge> m_edges;
 };
 

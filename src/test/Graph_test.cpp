@@ -27,7 +27,7 @@ UNITTEST(Graph, GetNeighbors)
   g.add_edge(1, 3);
   g.add_edge(3, 4);
 
-  std::vector<Graph::vertex_type> neighbors = g.get_neighbors(1);
+  std::vector<Graph::size_type> neighbors = g.get_neighbors(1);
 
   testEqual(neighbors.size(), 3U);
   testEqual(neighbors[0], 0U);
