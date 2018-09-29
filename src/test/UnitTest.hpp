@@ -1,11 +1,32 @@
 /**
  * @file UnitTest.hpp
- * @brief Top level header for UnitTest 
+ * @brief Top level header for UnitTest
  * @author Dominique LaSalle <dominique@solidlake.com>
- * Copyright 2015-2018, Dominique LaSalle
+ * Copyright 2015-2017, Dominique LaSalle
+ * Copyright 2017-2018, Solid Lake LLC
  * @version 1
  * @date 2015-08-22
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
  */
+
+
 
 
 #ifndef SOLIDUTILS_INCLUDE_UNITTEST_HPP
@@ -17,6 +38,8 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+
+#include <cmath>
 
 
 /******************************************************************************
@@ -90,7 +113,22 @@ class TestStream
         std::string const & a,
         std::string const & b)
     {
-      m_fail = !(a.compare(b) == 0);
+      if (!m_fail) {
+        m_fail = !(a.compare(b) == 0);
+      }
+
+      return test();
+    }
+
+
+    template<typename A, typename B>
+    std::ostream & testEqual(
+        A const & a,
+        B const & b)
+    {
+      if (!m_fail) {
+        m_fail = !(a == b);
+      }
 
       return test();
     }
@@ -115,22 +153,13 @@ class TestStream
 
 
     template<typename A, typename B>
-    std::ostream & testEqual(
-        A const & a,
-        B const & b)
-    {
-      m_fail = !(a == b);
-
-      return test();
-    }
-
-
-    template<typename A, typename B>
     std::ostream & testNotEqual(
         A const & a,
         B const & b)
     {
-      m_fail = (a == b);
+      if (!m_fail) {
+        m_fail = (a == b);
+      }
 
       return test();
     }
@@ -139,7 +168,9 @@ class TestStream
     std::ostream & testTrue(
         bool const pass)
     {
-      m_fail = !pass;
+      if (!m_fail) {
+        m_fail = !pass;
+      }
 
       return test();
     }
@@ -148,7 +179,9 @@ class TestStream
     std::ostream & testFalse(
         bool const fail)
     {
-      m_fail = fail;
+      if (!m_fail) {
+        m_fail = fail;
+      }
 
       return test();
     }
@@ -159,7 +192,9 @@ class TestStream
         A const & a,
         B const & b)
     {
-      m_fail = !(a > b);
+      if (!m_fail) {
+        m_fail = !(a > b);
+      }
 
       return test();
     }
@@ -170,7 +205,9 @@ class TestStream
         A const & a,
         B const & b)
     {
-      m_fail = !(a >= b);
+      if (!m_fail) {
+        m_fail = !(a >= b);
+      }
 
       return test();
     }
@@ -181,7 +218,9 @@ class TestStream
         A const & a,
         B const & b)
     {
-      m_fail = !(a < b);
+      if (!m_fail) {
+        m_fail = !(a < b);
+      }
 
       return test();
     }
@@ -192,13 +231,15 @@ class TestStream
         A const & a,
         B const & b)
     {
-      m_fail = !(a <= b);
+      if (!m_fail) {
+        m_fail = !(a <= b);
+      }
 
       return test();
     }
 
 
-   
+
   private:
     std::ostringstream m_stream;
     bool m_fail;
@@ -322,7 +363,7 @@ int main(
       std::endl;
   std::cout << sl::_unittest_numberFailed << " tests failed." << \
       std::endl;
-  
+
   if (sl::_unittest_numberFailed == 0) {
     return 0;
   } else {
