@@ -2,6 +2,7 @@ Makefile
 *.swp
 *.o
 *.a
+*.bc
 doc/html
 doc/src
 build
